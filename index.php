@@ -1,3 +1,3 @@
 <?php
 
-echo strrev(123);
+echo str1rev(123);
