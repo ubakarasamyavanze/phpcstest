@@ -1,4 +1,4 @@
-name: PHP checks
+name: Linter
 
 on:
   push:
@@ -8,32 +8,13 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Validate composer.json 
-      run: composer validate
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
-
-    - name: Run lint
-      run: composer lint
-
-    - name: Run phpcs
-      run: composer phpcs
-
-    - name: Run phpunit
-      run: composer test
+    - name: Super-Linter
+      uses: docker://github/super-linter:latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.PHPCS }}
+        VALIDATE_TERRAFORM_TERRASCAN: false
