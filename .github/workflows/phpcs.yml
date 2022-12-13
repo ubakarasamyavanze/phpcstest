@@ -16,5 +16,5 @@ jobs:
     - name: Super-Linter
       uses: docker://github/super-linter:latest
       env:
-        GITHUB_TOKEN: ${{ secrets.PHPCS }}
+        GITHUB_TOKEN: ${{ secrets.PHPCS2 }}
         VALIDATE_TERRAFORM_TERRASCAN: false
